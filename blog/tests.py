@@ -72,3 +72,9 @@ class BlogPostTest(TestCase):
         response = self.client.get(reverse("blog:post_list"))
         self.assertContains(response, self.post1.title)
         self.assertNotContains(response, self.post2.title)
+
+    def test_post_create_page(self):
+        response = self.client.get(reverse("blog:post_create"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "blog/post_create.html")
+        self.assertContains(response, "Add New Post")

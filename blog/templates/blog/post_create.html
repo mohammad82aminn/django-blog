@@ -1,0 +1,63 @@
+{% extends "_base.html" %}
+
+{% block page_title %}
+    Add New Post
+{% endblock page_title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row g-4">
+
+        <main class="col-lg-9">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+
+                    <h1 class="h3 mb-4">Add New Post</h1>
+
+                    <form method="post"
+                          action="{% url 'blog:post_create' %}">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">
+                                Post Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                class="form-control"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="text" class="form-label">
+                                Post Text
+                            </label>
+
+                            <textarea
+                                id="text"
+                                name="text"
+                                class="form-control"
+                                rows="8"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+</div>
+{% endblock content %}
