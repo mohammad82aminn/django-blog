@@ -1,0 +1,66 @@
+{% extends "_base.html" %}
+
+{% block page_title %}{{ post.title }}{% endblock page_title %}
+
+{% block content %}
+
+<div class="row g-4">
+
+        <!-- Post column -->
+        <div class="col-lg-9">
+
+            <!-- Post -->
+            <article class="card shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h1 class="card-title h2">{{post.title}}</h1>
+                    <p class="small text-body-secondary mb-4">By {{post.author}}</p>
+                    
+                    <p class="mb-0">{{post.text}}</p>
+                </div>
+            </article>
+
+            <!-- Comments -->
+            <section class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Comments (2)</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item py-3">
+                        <p class="fw-semibold mb-1">Sara</p>
+                        <p class="mb-0">Great post, thanks!</p>
+                    </li>
+                    <li class="list-group-item py-3">
+                        <p class="fw-semibold mb-1">Ali</p>
+                        <p class="mb-0">Very helpful explanation.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Add comment -->
+            <section class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Add a comment</div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="id_name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="id_email" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_text" class="form-label">Comment</label>
+                            <textarea class="form-control" id="id_text" name="text" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Sidebar -->
+        
+
+    </div>
+
+{% endblock %}
