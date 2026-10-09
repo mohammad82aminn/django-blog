@@ -6,23 +6,24 @@ from .models import Post
 
 
 class BlogPostTest(TestCase):
-    def setUp(self):
-        self.user = get_user_model().objects.create_user(
+    @classmethod
+    def setUpTestData(cls):
+        user = get_user_model().objects.create_user(
             username="testuser",
             password="testpassword123",
         )
 
-        self.post1 = Post.objects.create(
+        cls.post1 = Post.objects.create(
             title="First Blog Post",
             text="This is my first blog post.",
-            author=self.user,
+            author=user,
             status=Post.Status.PUBLISHED,
         )
 
-        self.post2 = Post.objects.create(
+        cls.post2 = Post.objects.create(
             title="Second Blog Post",
             text="This is a draft blog post.",
-            author=self.user,
+            author=user,
             status=Post.Status.DRAFT,
         )
 
