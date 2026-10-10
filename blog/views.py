@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
+from blog.forms import PostForm
 from blog.models import Post
 
 def post_list_view(request):
@@ -12,4 +13,10 @@ def post_detail_view(request, pk):
     return render(request, "blog/post_detail.html", {"post":post})
 
 def post_create_view(request):
-    return render(request, "blog/post_create.html")
+    if request.method == 'POST':
+        form = PostForm(request.method)
+        if form.is_valid():
+            form.save()
+    form = PostForm()
+
+    return render(request, "blog/post_create.html", {"form":form})

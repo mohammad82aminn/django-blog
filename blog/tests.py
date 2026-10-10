@@ -78,3 +78,19 @@ class BlogPostTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "blog/post_create.html")
         self.assertContains(response, "Add New Post")
+
+    def test_post_create_contains_form(self):
+
+        response = self.client.get(
+            reverse("blog:post_create")
+        )
+
+        self.assertContains(
+            response,
+            "name=\"title\""
+        )
+
+        self.assertContains(
+            response,
+            "name=\"text\""
+        )
