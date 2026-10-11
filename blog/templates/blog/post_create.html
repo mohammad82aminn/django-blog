@@ -1,36 +1,97 @@
 {% extends "_base.html" %}
 
-{% block page_title %}
-    Add New Post
-{% endblock page_title %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row g-4">
 
-        <main class="col-lg-9">
-            <div class="card border-0 shadow-sm">
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+
+            <div class="card shadow-sm border-0">
+
                 <div class="card-body p-4">
 
-                    <h1 class="h3 mb-4">Add New Post</h1>
+
+                    <h1 class="mb-4">
+                        Create New Post
+                    </h1>
+
 
                     <form method="post"
-                        action="{% url 'blog:post_create' %}">
+                          action="{% url 'blog:post_create' %}">
 
                         {% csrf_token %}
 
-                        {{ form.as_p }}
 
-                        <button type="submit">
-                            Submit
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Title
+                            </label>
+
+                            {{ form.title }}
+
+                            {% if form.title.errors %}
+
+                                <div class="text-danger mt-2">
+
+                                    {{ form.title.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Content
+                            </label>
+
+                            {{ form.text }}
+
+
+                            {% if form.text.errors %}
+
+                                <div class="text-danger mt-2">
+
+                                    {{ form.text.errors }}
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            Publish Post
+
                         </button>
+
 
                     </form>
 
+
                 </div>
+
             </div>
-        </main>
+
+
+        </div>
 
     </div>
+
 </div>
+
+
 {% endblock content %}
