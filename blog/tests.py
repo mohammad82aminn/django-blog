@@ -94,3 +94,35 @@ class BlogPostTest(TestCase):
             response,
             "name=\"text\""
         )
+    def test_create_post(self):
+
+        response = self.client.post(
+            reverse("blog:post_create"),
+            {
+                "title": "Form Post",
+                "text": "Created with ModelForm",
+            }
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTrue(
+            Post.objects.filter(
+                title="Form Post"
+            ).exists()
+        )
+
+    def test_create_post_redirects(self):
+
+        response = self.client.post(
+            reverse("blog:post_create"),
+            {
+                "title": "New Post",
+                "text": "Testing redirect",
+            }
+        )
+
+        self.assertEqual(
+            response.status_code,
+            302
+        )

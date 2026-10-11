@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
 
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth import get_user_model
 from blog.forms import PostForm
 from blog.models import Post
 
@@ -14,9 +14,13 @@ def post_detail_view(request, pk):
 
 def post_create_view(request):
     if request.method == 'POST':
-        form = PostForm(request.method)
+        form = PostForm(request.POST)
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.author = get_user_model().objects.first()
+            post.status = Post.Status.PUBLISHED
+            post.save()
+            return redirect("blog:post_list")
     form = PostForm()
 
     return render(request, "blog/post_create.html", {"form":form})

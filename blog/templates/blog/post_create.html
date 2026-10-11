@@ -15,11 +15,13 @@
                     <h1 class="h3 mb-4">Add New Post</h1>
 
                     <form method="post"
+                        action="{% url 'blog:post_create' %}">
+
                         {% csrf_token %}
 
-                        {{form}}
-                        
-                        <button type="submit" >
+                        {{ form.as_p }}
+
+                        <button type="submit">
                             Submit
                         </button>
 
