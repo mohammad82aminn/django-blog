@@ -18,7 +18,7 @@ def post_detail_view(request, pk):
             comment = form.save(commit=False)
             comment.post = post
             comment.save()
-            return redirect("blog/post_detail", pk = pk.post)
+            return redirect("blog:post_detail", pk = post.pk)
     else:
         form = CommentForm()
         
