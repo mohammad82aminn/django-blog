@@ -50,15 +50,26 @@ class PostDetailView(generic.DeleteView):
 
 
 
-def post_create_view(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.status = Post.Status.PUBLISHED
-            post.save()
-            return redirect("blog:post_list")
-    form = PostForm()
+# def post_create_view(request):
+#     if request.method == 'POST':
+#         form = PostForm(request.POST)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.author = request.user
+#             post.status = Post.Status.PUBLISHED
+#             post.save()
+#             return redirect("blog:post_list")
+#     form = PostForm()
 
-    return render(request, "blog/post_create.html", {"form":form})
+#     return render(request, "blog/post_create.html", {"form":form})
+
+class PostCreateView(generic.CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = "blog/post_create.html"
+    success_url = "/blog/"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.status = Post.Status.PUBLISHED
+        return super().form_valid(form)
