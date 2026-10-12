@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blog.models import Post
+from blog.models import Post, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -9,4 +9,5 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ("title", "text")
     ordering = ("-datetime_modified",)
 
+admin.site.register(Comment)
     

@@ -1,7 +1,8 @@
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import get_user_model
-from blog.forms import PostForm
+from blog.forms import PostForm, CommentForm
+from blog.models import Post, Comment
 from blog.models import Post
 
 def post_list_view(request):
@@ -10,7 +11,19 @@ def post_list_view(request):
 
 def post_detail_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, "blog/post_detail.html", {"post":post})
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid:
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect("blog/post_detail", pk = pk.post)
+    else:
+        form = CommentForm()
+        
+    comments = post.comments.all()
+    return render(request, "blog/post_detail.html", {"post":post, "comments":comments, "comment_form":form})
 
 def post_create_view(request):
     if request.method == 'POST':
