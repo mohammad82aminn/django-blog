@@ -6,7 +6,7 @@ from blog.models import Post, Comment
 from blog.models import Post
 
 def post_list_view(request):
-    post_list = Post.objects.filter(status=Post.Status.PUBLISHED)
+    post_list = Post.objects.filter(status=Post.Status.PUBLISHED).order_by("-datetime_created")
     return render(request, 'blog/post_list.html', {'post_list':post_list})
 
 def post_detail_view(request, pk):
@@ -30,7 +30,7 @@ def post_create_view(request):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = get_user_model().objects.first()
+            post.author = request.user
             post.status = Post.Status.PUBLISHED
             post.save()
             return redirect("blog:post_list")
