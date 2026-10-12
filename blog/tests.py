@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import Post
+from .models import Post,Comment
 
 
 class BlogPostTest(TestCase):
@@ -28,7 +28,12 @@ class BlogPostTest(TestCase):
             author=cls.user,
             status=Post.Status.DRAFT,
         )
-
+        cls.comment1 = Comment.objects.create(
+            post=cls.post1,
+            name="Test User",
+            email="test@example.com",
+            text="This is a test comment.",
+        )
 
     def test_post_list_direct_url(self):
 
@@ -252,4 +257,22 @@ class BlogPostTest(TestCase):
         self.assertEqual(
             response.status_code,
             302
+        )
+    def test_post_detail_contains_comments(self):
+
+        url = reverse(
+            "blog:post_detail",
+            args=[self.post1.pk]
+        )
+
+        response = self.client.get(url)
+
+        self.assertIn(
+            "comments",
+            response.context
+        )
+
+        self.assertContains(
+            response,
+            self.comment1.text
         )
